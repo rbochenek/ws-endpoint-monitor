@@ -214,8 +214,8 @@ async fn metrics_handler(data: web::Data<AppState>) -> HttpResponse {
 /// * `failure` - Current failure count
 fn prometheus_output(endpoint: &str, success: usize, failure: usize) -> HttpResponse {
     // Create counter metrics with endpoint label
-    let counter_opts = Opts::new("check_count", "Number of connection check results")
-        .const_label("endpoint", endpoint);
+    let counter_opts =
+        Opts::new("check_count", "Counter for checks results").const_label("endpoint", endpoint);
     let success_counter =
         Counter::with_opts(counter_opts.clone().const_label("result", "SUCCESS")).unwrap();
     let failure_counter =
