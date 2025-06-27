@@ -17,14 +17,14 @@ cargo install --path .
 ### Basic Usage
 
 ```bash
-ws-endpoint-monitor --monitor-url wss://your-node.example.com
+ws-endpoint-monitor wss://your-node.example.com
 ```
 
 ### Advanced Configuration
 
 ```bash
 ws-endpoint-monitor \
-  --monitor-url wss://mainnet.liberland.org \
+  wss://rpc.polkadot.io \
   --monitor-interval 30 \
   --monitor-connection-timeout 5 \
   --monitor-request-timeout 10 \
@@ -35,21 +35,26 @@ ws-endpoint-monitor \
 
 ## Configuration Options
 
-| Option                         | Default                       | Description                   |
-| ------------------------------ | ----------------------------- | ----------------------------- |
-| `--monitor-url`                | `wss://mainnet.liberland.org` | WebSocket URL to monitor      |
-| `--monitor-interval`           | `60`                          | Seconds between checks        |
-| `--monitor-connection-timeout` | `5`                           | Connection timeout (seconds)  |
-| `--monitor-request-timeout`    | `5`                           | RPC request timeout (seconds) |
-| `--server-addr`                | `0.0.0.0`                     | HTTP server bind address      |
-| `--server-port`                | `3000`                        | HTTP server port              |
-| `--verbose`                    | `false`                       | Enable debug logging          |
+The node URL is a required positional argument:
+
+- `<NODE_URL>` - WebSocket URL of the Substrate node to monitor (e.g., `wss://rpc.polkadot.io`)
+
+Optional parameters:
+
+| Option                         | Default   | Description                   |
+| ------------------------------ | --------- | ----------------------------- |
+| `--monitor-interval`           | `60`      | Seconds between checks        |
+| `--monitor-connection-timeout` | `5`       | Connection timeout (seconds)  |
+| `--monitor-request-timeout`    | `5`       | RPC request timeout (seconds) |
+| `--server-addr`                | `0.0.0.0` | HTTP server bind address      |
+| `--server-port`                | `3000`    | HTTP server port              |
+| `--verbose`                    | `false`   | Enable debug logging          |
 
 ## Metrics
 
 Metrics are available at `http://<server-addr>:<server-port>/metrics` in Prometheus format:
 
 ```
-check_count{endpoint="wss://example.com",result="SUCCESS"} 42
-check_count{endpoint="wss://example.com",result="TIMEOUT"} 3
+check_count{endpoint="wss://rpc.polkadot.io",result="SUCCESS"} 42
+check_count{endpoint="wss://rpc.polkadot.io",result="TIMEOUT"} 3
 ```

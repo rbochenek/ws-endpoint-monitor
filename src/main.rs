@@ -23,8 +23,7 @@ struct Args {
     /// WebSocket URL of the Substrate node to monitor.
     ///
     /// This should be a valid WebSocket endpoint (ws:// or wss://).
-    #[arg(long, default_value = "wss://mainnet.liberland.org")]
-    monitor_url: String,
+    node_url: String,
 
     /// Interval between connection checks in seconds.
     ///
@@ -98,14 +97,14 @@ async fn main() -> Result<()> {
 
     // Create application state
     let app_state = AppState {
-        ws_endpoint: args.monitor_url.clone(),
+        ws_endpoint: args.node_url.clone(),
         success: Arc::clone(&success_counter),
         failure: Arc::clone(&failure_counter),
     };
 
     // Spawn connection monitor task
     let _connection_monitor = tokio::spawn(connection_monitor(
-        args.monitor_url,
+        args.node_url,
         args.monitor_interval,
         args.monitor_connection_timeout,
         args.monitor_request_timeout,
