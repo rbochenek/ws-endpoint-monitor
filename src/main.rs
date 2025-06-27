@@ -5,8 +5,9 @@
 //! Results are exposed as Prometheus metrics via an HTTP endpoint.
 
 use actix_web::{App, HttpResponse, HttpServer, get, web};
-use anyhow::Result;
+use anyhow::{Result, bail};
 use clap::Parser;
+use jsonrpsee::client_transport::ws::Url;
 use jsonrpsee::{core::client::ClientT, rpc_params, ws_client::WsClientBuilder};
 use prometheus::{Counter, Encoder, Opts, Registry, TextEncoder};
 use std::sync::Arc;
@@ -90,6 +91,9 @@ async fn main() -> Result<()> {
         .finish();
     tracing::subscriber::set_global_default(subscriber)
         .expect("Failed to set default tracing subscriber");
+
+    // Validate provided node URL
+    check_node_url(&args.node_url)?;
 
     // Initialize shared atomic counters
     let success_counter = Arc::new(AtomicUsize::new(0));
@@ -239,4 +243,27 @@ fn prometheus_output(endpoint: &str, success: usize, failure: usize) -> HttpResp
     HttpResponse::Ok()
         .content_type(encoder.format_type())
         .body(buffer)
+}
+
+/// Validates that the provided node URL is a valid WebSocket URL.
+///
+/// # Arguments
+///
+/// * `node_url` - The URL string to validate
+///
+/// # Returns
+///
+/// * `Ok(())` if the URL is valid
+/// * `Err` if the URL cannot be parsed or uses an unsupported scheme
+fn check_node_url(node_url: &str) -> Result<()> {
+    let parsed = Url::parse(node_url)?;
+    let scheme = parsed.scheme();
+    match scheme {
+        "ws" | "wss" => {}
+        _ => {
+            bail!("Unsupported URL scheme '{}'", scheme);
+        }
+    }
+
+    Ok(())
 }
