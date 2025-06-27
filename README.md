@@ -4,7 +4,7 @@ WebSocket endpoint monitor for Substrate-based blockchain nodes with Prometheus 
 
 ## Overview
 
-This tool continuously monitors the health of WebSocket connections to Substrate blockchain nodes by periodically connecting and fetching the finalized block head. Connection results are tracked and exposed as Prometheus metrics via an HTTP endpoint.
+This tool continuously monitors the health of a single Substrate blockchain node's WebSocket endpoint by periodically connecting and fetching the finalized block head. Connection results are tracked and exposed as Prometheus metrics via an HTTP endpoint.
 
 ## Installation
 
