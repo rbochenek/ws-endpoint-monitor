@@ -39,8 +39,8 @@ ws-endpoint-monitor \
 | ------------------------------ | ----------------------------- | ----------------------------- |
 | `--monitor-url`                | `wss://mainnet.liberland.org` | WebSocket URL to monitor      |
 | `--monitor-interval`           | `60`                          | Seconds between checks        |
-| `--monitor-connection-timeout` | `10`                          | Connection timeout (seconds)  |
-| `--monitor-request-timeout`    | `10`                          | RPC request timeout (seconds) |
+| `--monitor-connection-timeout` | `5`                           | Connection timeout (seconds)  |
+| `--monitor-request-timeout`    | `5`                           | RPC request timeout (seconds) |
 | `--server-addr`                | `127.0.0.1`                   | HTTP server bind address      |
 | `--server-port`                | `3000`                        | HTTP server port              |
 | `--verbose`                    | `false`                       | Enable debug logging          |

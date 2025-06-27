@@ -35,13 +35,13 @@ struct Args {
     /// Timeout for establishing WebSocket connection in seconds.
     ///
     /// If the connection cannot be established within this time, it's marked as failed.
-    #[arg(long, default_value_t = 10)]
+    #[arg(long, default_value_t = 5)]
     monitor_connection_timeout: u64,
 
     /// Timeout for RPC requests in seconds.
     ///
     /// After connection is established, this timeout applies to individual RPC calls.
-    #[arg(long, default_value_t = 10)]
+    #[arg(long, default_value_t = 5)]
     monitor_request_timeout: u64,
 
     /// HTTP server bind address.
