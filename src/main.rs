@@ -47,7 +47,7 @@ struct Args {
     /// HTTP server bind address.
     ///
     /// The address where the metrics endpoint will be exposed.
-    #[arg(long, default_value = "127.0.0.1")]
+    #[arg(long, default_value = "0.0.0.0")]
     server_addr: String,
 
     /// HTTP server port.
